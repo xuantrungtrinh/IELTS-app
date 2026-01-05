@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 function App() {
 
+    const READ_ONLY_MODE = true;
+
     const STUDY_STORAGE_KEY = "ielts_study_progress";
 
     // ✅ 1. STATE PHẢI NẰM Ở ĐÂY
@@ -14,7 +16,7 @@ function App() {
 
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const LIMIT = 3;
+    const LIMIT = 10;
 
     const [editingId, setEditingId] = useState(null); // openId = id của vocab đang mở answer, null = tất cả đang ẩn.
     const [openId, setOpenId] = useState(null);
@@ -435,9 +437,12 @@ function App() {
                                     </div>
                                   )}
                                 </div>
-
-                              <button style={{ marginLeft: "10px" }} onClick={() => startEdit(item)}>✏ Edit</button>
-                              <button onClick={() => handleDelete(item.id)}>🗑 Delete</button>
+                              {!READ_ONLY_MODE && (
+                                <>
+                                  <button style={{ marginLeft: "10px" }} onClick={() => startEdit(item)}>✏ Edit</button>
+                                  <button onClick={() => handleDelete(item.id)}>🗑 Delete</button>
+                                </>
+                              )}
                             </>
                           )}
 
@@ -580,38 +585,42 @@ function App() {
           </div>
         )}
 
-        <hr />
+        {!READ_ONLY_MODE && (
+            <>
+                <hr />
 
-        <h2>Add new vocab</h2>
+                <h2>Add new vocab</h2>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Question"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    placeholder="Question"
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                  />
 
-          <br />
+                  <br />
 
-          <input
-            type="text"
-            placeholder="Answer"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
+                  <input
+                    type="text"
+                    placeholder="Answer"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                  />
 
-          <br />
+                  <br />
 
-          <select value={topic} onChange={(e) => setTopic(e.target.value)}>
-              <option value="">Topic</option>
-              <option value="Travel">Travel</option>
-              <option value="Education">Education</option>
-              <option value="Technology">Technology</option>
-          </select>
+                  <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+                      <option value="">Topic</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Education">Education</option>
+                      <option value="Technology">Technology</option>
+                  </select>
 
-          <button type="submit">Add vocab</button>
-        </form>
+                  <button type="submit">Add vocab</button>
+                </form>
+            </>
+        )}
       </div>
     );
 
