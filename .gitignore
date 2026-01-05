@@ -16,8 +16,8 @@ __pycache__/
 # production & build output
 /build
 /dist
-/.idea
 /.vscode
+.idea/
 
 # misc & Env files
 .env
