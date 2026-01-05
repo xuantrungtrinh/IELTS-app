@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from app.extensions import db
 from flask_cors import CORS
+
 # from flask_sqlalchemy import SQLAlchemy
 #
 # db = SQLAlchemy()
@@ -22,6 +23,8 @@ def create_app():
 
     db.init_app(app)
 
+    from app.models import Question
+
     with app.app_context():
         db.create_all()
 
@@ -29,3 +32,6 @@ def create_app():
     app.register_blueprint(vocab_bp)
 
     return app
+
+
+
