@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
       e.preventDefault();
 
       try {
-        const res = await fetch("http://127.0.0.1:5000/vocab", {
+        const res = await fetch(`${API_BASE_URL}/vocab`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -95,7 +96,7 @@ function App() {
 
     const saveEdit = async (id) => {
       try {
-        const res = await fetch(`http://127.0.0.1:5000/vocab/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/vocab/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -123,7 +124,7 @@ function App() {
 
     const handleDelete = async (id) => {
       try {
-        const res = await fetch(`http://127.0.0.1:5000/vocab/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/vocab/${id}`, {
           method: "DELETE",
         });
 
@@ -147,7 +148,7 @@ function App() {
 
         await new Promise((r) => setTimeout(r, 1000)); // 1s delay
 
-        let url = `http://127.0.0.1:5000/vocab?page=${page}&limit=${LIMIT}`;
+        let url = `${API_BASE_URL}/vocab?page=${page}&limit=${LIMIT}`;
         if (topic) {
           url += `&topic=${encodeURIComponent(topic)}`;
         }

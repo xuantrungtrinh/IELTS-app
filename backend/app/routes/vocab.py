@@ -1,35 +1,16 @@
-# from flask import Blueprint, jsonify
-# from ..models import Vocabulary
-#
-# vocab_bp = Blueprint("vocab", __name__, url_prefix="/api/vocab")
-#
-# @vocab_bp.route("/", methods=["GET"])
-# def get_vocab():
-#     words = Vocabulary.query.all()
-#     return jsonify([
-#         {"word": w.word, "meaning": w.meaning, "topic": w.topic}
-#         for w in words
-#     ])
-
 from flask import Blueprint, jsonify, request
 from app.models import Question
 from app.extensions import db
 
 vocab_bp = Blueprint("vocab", __name__)
 
-# GET: lấy toàn bộ vocab
-# @vocab_bp.route("/vocab", methods=["GET"])
-# def get_vocab():
-#     questions = Question.query.all()
-#
-#     return jsonify([
-#         {
-#             "id": q.id,
-#             "question": q.text,
-#             "answer": q.answer
-#         }
-#         for q in questions
-#     ])
+# @app.route("/")
+# def home():
+#     return {
+#         "status": "ok",
+#         "message": "IELTS Vocab API is running"
+#     }
+
 @vocab_bp.route("/vocab", methods=["GET"])
 def get_vocab():
     # 1️⃣ Lấy query params
@@ -115,38 +96,6 @@ def create_vocab():
         "answer": new_question.answer,
         "topic": new_question.topic
     }), 201
-
-# # UPDATE:
-# @vocab_bp.route("/vocab/<int:vocab_id>", methods=["PUT"])
-# def update_vocab(vocab_id):
-#     data = request.get_json()
-#
-#     if not data:
-#         return jsonify({"error": "Missing JSON body"}), 400
-#
-#     question = Question.query.get(vocab_id)
-#
-#     if question is None:
-#         return jsonify({"error": "Vocab not found"}), 404
-#
-#     # cập nhật nếu có gửi lên
-#     if "question" in data:
-#         if not isinstance(data["question"], str) or not data["question"].strip():
-#             return jsonify({"error": "Invalid question"}), 400
-#         question.text = data["question"].strip()
-#
-#     if "answer" in data:
-#         if not isinstance(data["answer"], str) or not data["answer"].strip():
-#             return jsonify({"error": "Invalid answer"}), 400
-#         question.answer = data["answer"].strip()
-#
-#     db.session.commit()
-#
-#     return jsonify({
-#         "id": question.id,
-#         "question": question.text,
-#         "answer": question.answer
-#     })
 
 # PUT: update vocab
 @vocab_bp.route("/vocab/<int:vocab_id>", methods=["PUT"])

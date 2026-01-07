@@ -14,7 +14,7 @@ __pycache__/
 *.db
 
 # production & build output
-/build
+build/
 /dist
 /.vscode
 .idea/
