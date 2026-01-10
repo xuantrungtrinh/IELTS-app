@@ -25,7 +25,6 @@ def create_app():
         db.create_all()
 
         # ✅ SAFE SEED – chỉ seed nếu DB trống
-        from app.models import Question
         if Question.query.count() == 0:
             from app.seed_data.vocab_data import ALL_VOCABS
             for item in ALL_VOCABS:
@@ -37,6 +36,3 @@ def create_app():
     app.register_blueprint(vocab_bp)
 
     return app
-
-
-
