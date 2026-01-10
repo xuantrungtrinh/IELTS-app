@@ -1,3 +1,4 @@
+import random
 from .travel import TRAVEL_VOCABS
 from .education import EDUCATION_VOCABS
 from .technology import TECHNOLOGY_VOCABS
@@ -11,3 +12,5 @@ ALL_VOCABS = (
     + ENVIRONMENT_VOCABS
     + HEALTH_VOCABS
 )
+
+random.shuffle(ALL_VOCABS)
