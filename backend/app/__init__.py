@@ -25,26 +25,11 @@ def create_app():
         db.create_all()
 
         # ✅ SAFE SEED – chỉ seed nếu DB trống
+        from app.models import Question
         if Question.query.count() == 0:
-            VOCABS = [
-                {"text": "itinerary", "answer": "a planned route or journey", "topic": "Travel"},
-                {"text": "accommodation", "answer": "a place to stay", "topic": "Travel"},
-
-                {"text": "curriculum", "answer": "the subjects taught in a school", "topic": "Education"},
-                {"text": "tuition", "answer": "money paid for education", "topic": "Education"},
-
-                {"text": "innovation", "answer": "a new idea or method", "topic": "Technology"},
-                {"text": "automation", "answer": "the use of machines to do work", "topic": "Technology"},
-
-                {"text": "mitigate", "answer": "to make something less severe", "topic": "Environment"},
-                {"text": "sustainability", "answer": "the ability to maintain resources long-term",
-                 "topic": "Environment"},
-            ]
-
-            for item in VOCABS:
-                q = Question(**item)
-                db.session.add(q)
-
+            from app.seed_data.vocab_data import ALL_VOCABS
+            for item in ALL_VOCABS:
+                db.session.add(Question(**item))
             db.session.commit()
             print("✅ Seeded initial IELTS vocab")
 
