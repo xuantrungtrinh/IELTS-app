@@ -200,7 +200,7 @@ function App() {
       } catch (e) {
         console.error("Failed to restore study progress");
       }
-    }, [initialTotal]);
+    }, []);
 
     useEffect(() => {
       if (mode === "study" && !studyStarted) {
@@ -237,7 +237,7 @@ function App() {
       };
 
       localStorage.setItem(STUDY_STORAGE_KEY, JSON.stringify(data));
-    }, [studyQueue, studyStarted]);
+    }, [studyQueue, studyStarted, initialTotal]);
 
     useEffect(() => {
       const handleKeyDown = (e) => {
