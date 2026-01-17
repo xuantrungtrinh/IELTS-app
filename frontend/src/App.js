@@ -200,7 +200,7 @@ function App() {
       } catch (e) {
         console.error("Failed to restore study progress");
       }
-    }, []);
+    }, [initialTotal]);
 
     useEffect(() => {
       if (mode === "study" && !studyStarted) {
