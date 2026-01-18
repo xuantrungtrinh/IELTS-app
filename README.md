@@ -8,10 +8,8 @@ This project is designed as a **portfolio / MVP app** focusing on clean state ma
 
 ## 🌐 Demo
 
-> (Links will be added after deployment)
-
-* Frontend: *TBD*
-* Backend API: *TBD*
+* Frontend: [deployed on Vercel](https://ielts-app-theta.vercel.app/)
+* Backend API: [deployed on Render](https://ielts-app-x5f5.onrender.com/vocab)
 
 ---
 
