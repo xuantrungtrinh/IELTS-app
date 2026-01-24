@@ -92,10 +92,10 @@ Backend (Flask)
 * Python Flask (REST API)
 * Simple JSON-based data source (no database for MVP)
 
-### Deployment (planned)
+### Deployment
 
-* Frontend: Vercel / Netlify
-* Backend: Render / Railway
+* Frontend: Vercel
+* Backend: Render
 
 ---
 
