@@ -12,9 +12,12 @@ def create_app():
     instance_path = os.path.join(base_dir, "..", "instance")
     os.makedirs(instance_path, exist_ok=True)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = (
-        "sqlite:///" + os.path.join(instance_path, "app.db")
-    )
+    if os.getenv("DATABASE_URL"):
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            "sqlite:///" + os.path.join(instance_path, "app.db")
+        )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
