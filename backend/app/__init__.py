@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from app.extensions import db
 from flask_cors import CORS
+from app.routes.vocab import vocab_bp
+from app.routes.auth import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -35,7 +37,7 @@ def create_app():
             db.session.commit()
             print("✅ Seeded initial IELTS vocab")
 
-    from app.routes.vocab import vocab_bp
     app.register_blueprint(vocab_bp)
+    app.register_blueprint(auth_bp)
 
     return app
