@@ -10,6 +10,17 @@ auth_bp = Blueprint("auth", __name__)
 def signup():
     data = request.json
 
+    if not data.get("username") or not data.get("email") or not data.get("password"):
+        return jsonify({"msg": "Missing fields"}), 400
+
+    existing_user = User.query.filter_by(email=data["email"]).first()
+    if existing_user:
+        return jsonify({"msg": "Email already exists"}), 400
+
+    existing_username = User.query.filter_by(username=data["username"]).first()
+    if existing_username:
+        return jsonify({"msg": "Username already exists"}), 400
+
     hashed_pw = generate_password_hash(data["password"])
 
     user = User(
