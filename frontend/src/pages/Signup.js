@@ -116,7 +116,7 @@ function Signup() {
               right: "10px",
               top: "50%",
               transform: "translateY(-50%)",
-              cursor: "pointer"
+              cursor: "pointer",
               userSelect: "none"
             }}
           >
