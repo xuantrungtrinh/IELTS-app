@@ -9,7 +9,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
