@@ -7,6 +7,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -65,7 +66,11 @@ function Signup() {
     <div style={{ maxWidth: "320px", margin: "50px auto" }}>
       <h2>Sign up</h2>
 
-      {message && <p>{message}</p>}
+      {message && (
+        <p style={{ color: "red", fontWeight: "bold" }}>
+          {message}
+        </p>
+      )}
 
       <form onSubmit={handleSignup}>
         <div style={{ marginBottom: "12px" }}>
@@ -87,7 +92,7 @@ function Signup() {
           />
         </div>
 
-        <div style={{ marginBottom: "6px" }}>
+        <div style={{ position: "relative", marginBottom: "8px" }}>
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -96,17 +101,20 @@ function Signup() {
             onFocus={() => setPasswordTouched(true)}
             minLength={6}
             required
+            style={{ paddingRight: "30px" }}
           />
-        </div>
-
-        <div style={{ marginBottom: "8px" }}>
-          <button
-            type="button"
+          <span
             onClick={() => setShowPassword(!showPassword)}
-            style={{ fontSize: "12px" }}
+            style={{
+              position: "absolute",
+              right: "8px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer"
+            }}
           >
-            {showPassword ? "Hide password" : "Show password"}
-          </button>
+            {showPassword ? "🙈" : "👁"}
+          </span>
         </div>
 
         {/* Show rule if < 6 characters */}
@@ -132,15 +140,31 @@ function Signup() {
           </small>
         )}
 
-        {/* Confirm Password */}
-        <div style={{ marginBottom: "12px" }}>
+        <div style={{ position: "relative", marginBottom: "12px" }}>
           <input
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            style={{ paddingRight: "30px" }} // 🔹 ADDED
           />
+
+          {/* 🔹 ADDED */}
+          <span
+            onClick={() =>
+              setShowConfirmPassword(!showConfirmPassword)
+            }
+            style={{
+              position: "absolute",
+              right: "8px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer"
+            }}
+          >
+            {showConfirmPassword ? "🙈" : "👁"}
+          </span>
         </div>
 
         {confirmPassword && password !== confirmPassword && (

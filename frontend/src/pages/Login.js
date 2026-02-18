@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -47,8 +48,8 @@ function Login() {
     <div style={{ maxWidth: "300px", margin: "50px auto" }}>
       <h2>Log in</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
+      {success && <p style={{ color: "green", fontWeight: "bold" }}>{success}</p>}
 
       <form onSubmit={handleLogin}>
         <div style={{ marginBottom: "12px" }}>
@@ -61,19 +62,32 @@ function Login() {
           />
         </div>
 
-        <div style={{ marginBottom: "12px" }}>
+        <div style={{ position: "relative", marginBottom: "12px" }}>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            style={{ paddingRight: "30px" }} // 🔹 ADDED
           />
+
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "8px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer"
+            }}
+          >
+            {showPassword ? "🙈" : "👁"}
+          </span>
         </div>
 
         <button type="submit">Log in</button>
       </form>
-
     </div>
   );
 }
