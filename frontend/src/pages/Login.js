@@ -45,7 +45,7 @@ function Login() {
 
   return (
     <div style={{ maxWidth: "300px", margin: "50px auto" }}>
-      <h2>Login</h2>
+      <h2>Log in</h2>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>{success}</p>}
@@ -71,7 +71,7 @@ function Login() {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
       </form>
 
     </div>
