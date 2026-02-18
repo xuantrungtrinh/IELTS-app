@@ -5,7 +5,7 @@ function Signup() {
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    const res = await fetch("https://your-backend.onrender.com/signup", {
+    const res = await fetch("https://ielts-app-x5f5.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

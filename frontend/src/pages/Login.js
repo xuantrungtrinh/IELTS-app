@@ -5,7 +5,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const res = await fetch("https://your-backend.onrender.com/login", {
+    const res = await fetch("https://ielts-app-x5f5.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
