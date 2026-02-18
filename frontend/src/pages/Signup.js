@@ -6,9 +6,11 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleSignup = async () => {
+    e.preventDefault();
     setMessage("");
 
     try {
@@ -39,28 +41,48 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "300px", margin: "50px auto" }}>
       <h2>Signup</h2>
 
       {message && <p>{message}</p>}
 
-      <input
-        placeholder="Username"
-        onChange={(e) => setUsername(e.target.value)}
-      />
+      <form onSubmit={handleSignup}>
+        <div style={{ marginBottom: "12px" }}>
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <div style={{ marginBottom: "12px" }}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <div style={{ marginBottom: "6px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            required
+          />
+        </div>
 
-      <button onClick={handleSignup}>Signup</button>
+        <small style={{ display: "block", marginBottom: "12px" }}>
+          Password must be at least 6 characters.
+        </small>
+
+        <button type="submit">Signup</button>
+      </form>
     </div>
   );
 }

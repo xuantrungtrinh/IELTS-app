@@ -4,6 +4,9 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const logout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (!confirmLogout) return;
+
     localStorage.removeItem("token");
     navigate("/login");
   };

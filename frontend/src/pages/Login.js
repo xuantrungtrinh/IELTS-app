@@ -10,6 +10,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    e.preventDefault();
     setError("");
     setSuccess("");
 
@@ -43,24 +44,36 @@ function Login() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "300px", margin: "50px auto" }}>
       <h2>Login</h2>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>{success}</p>}
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: "12px" }}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <div style={{ marginBottom: "12px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-      <button onClick={handleLogin}>Login</button>
+        <button type="submit">Login</button>
+      </form>
+
     </div>
   );
 }
