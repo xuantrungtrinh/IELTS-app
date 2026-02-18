@@ -59,6 +59,7 @@ function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
         </div>
 
@@ -69,17 +70,21 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ paddingRight: "30px" }} // 🔹 ADDED
+            style={{
+              width: "100%",                 // 🔹 ADDED
+              padding: "8px 35px 8px 8px",    // 🔹 CHANGED
+              boxSizing: "border-box"        // 🔹 ADDED
+            }}
           />
-
           <span
             onClick={() => setShowPassword(!showPassword)}
             style={{
               position: "absolute",
-              right: "8px",
+              right: "10px",                 // 🔹 CHANGED
               top: "50%",
               transform: "translateY(-50%)",
-              cursor: "pointer"
+              cursor: "pointer",
+              userSelect: "none"
             }}
           >
             {showPassword ? "🙈" : "👁"}

@@ -79,6 +79,7 @@ function Signup() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
         </div>
 
@@ -89,6 +90,7 @@ function Signup() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
         </div>
 
@@ -101,16 +103,21 @@ function Signup() {
             onFocus={() => setPasswordTouched(true)}
             minLength={6}
             required
-            style={{ paddingRight: "30px" }}
+            style={{
+              width: "100%",                 // 🔹 ADDED
+              padding: "8px 35px 8px 8px",    // 🔹 CHANGED (right padding for icon)
+              boxSizing: "border-box"        // 🔹 ADDED
+            }}
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
             style={{
               position: "absolute",
-              right: "8px",
+              right: "10px",
               top: "50%",
               transform: "translateY(-50%)",
               cursor: "pointer"
+              userSelect: "none"
             }}
           >
             {showPassword ? "🙈" : "👁"}
@@ -147,7 +154,12 @@ function Signup() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            style={{ paddingRight: "30px" }} // 🔹 ADDED
+            style={{
+              width: "100%",                 // 🔹 ADDED
+              padding: "8px 35px 8px 8px",    // 🔹 CHANGED
+              boxSizing: "border-box"        // 🔹 ADDED
+            }}
+ // 🔹 ADDED
           />
 
           {/* 🔹 ADDED */}
@@ -157,10 +169,11 @@ function Signup() {
             }
             style={{
               position: "absolute",
-              right: "8px",
+              right: "10px",                 // 🔹 CHANGED
               top: "50%",
               transform: "translateY(-50%)",
-              cursor: "pointer"
+              cursor: "pointer",
+              userSelect: "none"
             }}
           >
             {showConfirmPassword ? "🙈" : "👁"}
