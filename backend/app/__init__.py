@@ -4,10 +4,16 @@ from app.extensions import db
 from flask_cors import CORS
 from app.routes.vocab import vocab_bp
 from app.routes.auth import auth_bp
+from flask_jwt_extended import JWTManager
+
+jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
     CORS(app)
+
+    app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+    jwt.init_app(app)
 
     # đường dẫn tuyệt đối tới instance/
     base_dir = os.path.abspath(os.path.dirname(__file__))

@@ -1,5 +1,7 @@
 flask
 flask-cors
 flask-sqlalchemy
-gunicorn==21.2.0
+flask-jwt-extended
 psycopg2-binary
+gunicorn==21.2.0
+
