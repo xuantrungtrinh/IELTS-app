@@ -90,7 +90,7 @@ export default function LessonScreen() {
 
       return () => clearTimeout(timer);
 
-  }, [currentIndex]);
+  }, [currentQuestion, speak]);
 
   const handleSubmit = () => {
     if (selected === null) return;
