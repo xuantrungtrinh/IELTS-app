@@ -84,8 +84,13 @@ export default function LessonScreen() {
   const currentQuestion = questions[currentIndex];
   useEffect(() => {
       if (!currentQuestion) return;
-      speak(currentQuestion.question);
-  }, [currentQuestion, speak]);
+      const timer = setTimeout(() => {
+        speak(currentQuestion.question);
+      }, 100);
+
+      return () => clearTimeout(timer);
+
+  }, [currentIndex]);
 
   const handleSubmit = () => {
     if (selected === null) return;
@@ -109,6 +114,7 @@ export default function LessonScreen() {
       setCurrentIndex(currentIndex + 1);
     } else {
       playSound(lessonendSound);
+      window.speechSynthesis.cancel();
       setIsLessonComplete(true);
     }
   };
@@ -145,7 +151,18 @@ export default function LessonScreen() {
       </p>
       <p>❤️ {hearts} | ⭐ {xpEarned}</p>
 
-      <h3>{currentQuestion.question}</h3>
+      <div style={{ fontSize: 18 }}>
+          {currentQuestion.question.split(" ").map((word, i) => (
+            <span
+              key={i}
+              onClick={() => speak(word)}
+              style={{ cursor: "pointer", marginRight: 5 }}
+            >
+              {word}
+            </span>
+          ))}
+      </div>
+
 
       {currentQuestion.options.map((option, index) => {
         let bg = "#fff";
