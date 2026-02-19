@@ -45,11 +45,9 @@ export default function LessonScreen() {
 
   const currentQuestion = questions[currentIndex];
   useEffect(() => {
-      if (currentQuestion) {
-        speak(currentQuestion.question);
-      }
-  }, [currentIndex]);
-
+      if (!currentQuestion) return;
+      speak(currentQuestion.question);
+  }, [currentQuestion]);
 
   const handleSubmit = () => {
     if (selected === null) return;
