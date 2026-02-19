@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import correctSound from "../assets/sounds/correct.mp3";
 import wrongSound from "../assets/sounds/wrong.mp3";
@@ -46,7 +46,7 @@ export default function LessonScreen() {
       audio.volume = 0.8;
       audio.play();
   };
-  const speak = (text, type = "question") => {
+  const speak = useCallback((text, type = "question") => {
       if (!text) return;
 
       window.speechSynthesis.cancel();
@@ -60,7 +60,6 @@ export default function LessonScreen() {
       utterance.lang = "en-US";
       utterance.rate = 0.95;
 
-      // 🔹 Pick female voice if available
       const femaleVoice = voices.find(
         (voice) =>
           voice.lang.includes("en") &&
@@ -69,8 +68,7 @@ export default function LessonScreen() {
 
       if (femaleVoice) {
         utterance.voice = femaleVoice;
-      } else if (voices.length > 0) {
-        // fallback random English voice
+      } else {
         const englishVoices = voices.filter(v => v.lang.includes("en"));
         if (englishVoices.length > 0) {
           utterance.voice =
@@ -79,14 +77,15 @@ export default function LessonScreen() {
       }
 
       window.speechSynthesis.speak(utterance);
-  };
+  }, [voices]);
+
   const [isLessonComplete, setIsLessonComplete] = useState(false);
 
   const currentQuestion = questions[currentIndex];
   useEffect(() => {
       if (!currentQuestion) return;
       speak(currentQuestion.question);
-  }, [currentIndex]);
+  }, [currentQuestion, speak]);
 
   const handleSubmit = () => {
     if (selected === null) return;
