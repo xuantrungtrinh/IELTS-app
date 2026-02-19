@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import correctSound from "../assets/sounds/correct.mp3";
+import wrongSound from "../assets/sounds/wrong.mp3";
+import lessonendSound from "../assets/sounds/end_lesson.mp3";
 
 export default function LessonScreen() {
   const { unit, module, lesson } = useParams();
-  <p style={{ fontSize: 12, color: "gray" }}>
-  Unit {unit} | Module {module} | Lesson {lesson}
-  </p>
 
   // Hardcode demo data trước
   const questions = [
@@ -30,8 +30,26 @@ export default function LessonScreen() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [hearts, setHearts] = useState(5);
   const [xpEarned, setXpEarned] = useState(0);
+  const playSound = (soundFile) => {
+      const audio = new Audio(soundFile);
+      audio.volume = 0.8;
+      audio.play();
+  };
+  const speak = (text) => {
+  window.speechSynthesis.cancel();  // 🛑 stop previous
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  window.speechSynthesis.speak(utterance);
+  };
+  const [isLessonComplete, setIsLessonComplete] = useState(false);
 
   const currentQuestion = questions[currentIndex];
+  useEffect(() => {
+      if (currentQuestion) {
+        speak(currentQuestion.question);
+      }
+  }, [currentIndex]);
+
 
   const handleSubmit = () => {
     if (selected === null) return;
@@ -39,8 +57,10 @@ export default function LessonScreen() {
     setShowFeedback(true);
 
     if (selected === currentQuestion.correct) {
+      playSound(correctSound);
       setXpEarned(xpEarned + currentQuestion.xp);
     } else {
+      playSound(wrongSound);
       setHearts(hearts - 1);
     }
   };
@@ -52,11 +72,22 @@ export default function LessonScreen() {
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      alert("Lesson Complete! XP: " + xpEarned);
+      playSound(lessonendSound);
+      setIsLessonComplete(true);
     }
   };
 
   const progress = ((currentIndex + 1) / questions.length) * 100;
+
+  if (isLessonComplete) {
+      return (
+        <div style={{ textAlign: "center", padding: 40 }}>
+          <h2>🎉 Lesson Complete!</h2>
+          <p>XP Earned: {xpEarned}</p>
+          <p>❤️ Hearts left: {hearts}</p>
+        </div>
+      );
+    }
 
   return (
     <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
@@ -73,6 +104,9 @@ export default function LessonScreen() {
         />
       </div>
 
+      <p style={{ fontSize: 12, color: "gray" }}>
+      Unit {unit} | Module {module} | Lesson {lesson}
+      </p>
       <p>❤️ {hearts} | ⭐ {xpEarned}</p>
 
       <h3>{currentQuestion.question}</h3>
