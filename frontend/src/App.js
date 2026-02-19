@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import LessonScreen from "./pages/LessonScreen";
 
 function App() {
   return (
@@ -19,6 +20,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/learn/:unit/:module/:lesson"
+          element={
+            <ProtectedRoute>
+              <LessonScreen />
             </ProtectedRoute>
           }
         />
