@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 
 export default function LessonScreen() {
   const { unit, module, lesson } = useParams();
+  <p style={{ fontSize: 12, color: "gray" }}>
+  Unit {unit} | Module {module} | Lesson {lesson}
+  </p>
 
   // Hardcode demo data trước
   const questions = [
