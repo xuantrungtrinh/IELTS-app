@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import correctSound from "../assets/sounds/correct.mp3";
 import wrongSound from "../assets/sounds/wrong.mp3";
@@ -82,10 +82,19 @@ export default function LessonScreen() {
   const [isLessonComplete, setIsLessonComplete] = useState(false);
 
   const currentQuestion = questions[currentIndex];
+  const hasSpokenRef = useRef(false);
+
+  useEffect(() => {
+      hasSpokenRef.current = false;
+  }, [currentIndex]);
+
   useEffect(() => {
       if (!currentQuestion) return;
+      if (hasSpokenRef.current) return;
+
       const timer = setTimeout(() => {
         speak(currentQuestion.question);
+        hasSpokenRef.current = true;
       }, 100);
 
       return () => clearTimeout(timer);
