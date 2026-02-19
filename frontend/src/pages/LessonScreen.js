@@ -7,6 +7,16 @@ import lessonendSound from "../assets/sounds/end_lesson.mp3";
 export default function LessonScreen() {
   const { unit, module, lesson } = useParams();
 
+  useEffect(() => {
+      const loadVoices = () => {
+        const allVoices = window.speechSynthesis.getVoices();
+        setVoices(allVoices);
+      };
+
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+  }, []);
+
   // Hardcode demo data trước
   const questions = [
     {
@@ -30,16 +40,45 @@ export default function LessonScreen() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [hearts, setHearts] = useState(5);
   const [xpEarned, setXpEarned] = useState(0);
+  const [voices, setVoices] = useState([]);
   const playSound = (soundFile) => {
       const audio = new Audio(soundFile);
       audio.volume = 0.8;
       audio.play();
   };
-  const speak = (text) => {
-  window.speechSynthesis.cancel();  // 🛑 stop previous
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  window.speechSynthesis.speak(utterance);
+  const speak = (text, type = "question") => {
+      if (!text) return;
+
+      window.speechSynthesis.cancel();
+
+      let cleanedText = text.replace(/___/g, ",");
+      cleanedText = cleanedText.replace(/[^a-zA-Z,\s]/g, " ");
+      cleanedText = cleanedText.replace(/\s+/g, " ").trim();
+
+      const utterance = new SpeechSynthesisUtterance(cleanedText);
+
+      utterance.lang = "en-US";
+      utterance.rate = 0.95;
+
+      // 🔹 Pick female voice if available
+      const femaleVoice = voices.find(
+        (voice) =>
+          voice.lang.includes("en") &&
+          voice.name.toLowerCase().includes("female")
+      );
+
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      } else if (voices.length > 0) {
+        // fallback random English voice
+        const englishVoices = voices.filter(v => v.lang.includes("en"));
+        if (englishVoices.length > 0) {
+          utterance.voice =
+            englishVoices[Math.floor(Math.random() * englishVoices.length)];
+        }
+      }
+
+      window.speechSynthesis.speak(utterance);
   };
   const [isLessonComplete, setIsLessonComplete] = useState(false);
 
@@ -47,7 +86,7 @@ export default function LessonScreen() {
   useEffect(() => {
       if (!currentQuestion) return;
       speak(currentQuestion.question);
-  }, [currentQuestion]);
+  }, [currentIndex]);
 
   const handleSubmit = () => {
     if (selected === null) return;
@@ -122,7 +161,10 @@ export default function LessonScreen() {
         return (
           <button
             key={index}
-            onClick={() => setSelected(index)}
+            onClick={() => {
+              setSelected(index);
+              speak(option, "option");
+            }}
             style={{
               display: "block",
               width: "100%",
